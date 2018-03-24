@@ -1,0 +1,1 @@
+Public microservice for auth-gateway with UI for user
