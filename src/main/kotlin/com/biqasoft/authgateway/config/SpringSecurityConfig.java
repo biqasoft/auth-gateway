@@ -2,7 +2,7 @@
  * Copyright (c) 2016. com.biqasoft
  */
 
-package com.biqasoft.authgateway.configs;
+package com.biqasoft.authgateway.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -31,11 +31,24 @@ public class SpringSecurityConfig {
         http.authenticationManager(this.authenticationManager);
         http.securityContextRepository(this.securityContextRepository);
 
-        // TODO: antMatchers(HttpMethod.OPTIONS).permitAll()
-        // http.authorizeExchange().pathMatchers("/auth/**").permitAll();
-        http.authorizeExchange().anyExchange().authenticated();
+        // Disable authentication for `/auth/**` routes.
+        http.authorizeExchange().pathMatchers("/api/v1/auth/**").permitAll()
+//        http.authorizeExchange().pathMatchers(RegistrationController_BASE + "/" + RegistrationController_REGISTER).permitAll()
+                .anyExchange().authenticated();
 
         return http.build();
     }
+
+//    @Override
+//    protected void configure(ServerHttpSecurity http) throws Exception {
+//        http.addFilterAfter(new ExceptionTranslationFilter(authExceptionHandler), BasicAuthenticationFilter.class);
+//
+//        http.securityContext();
+//        http.anonymous();
+//
+//        http.authorizeRequests()
+//                .antMatchers(HttpMethod.OPTIONS).permitAll()
+//                .antMatchers("/**").permitAll();
+//    }
 
 }
